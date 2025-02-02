@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  display: flex;
+  border-radius: 16px;
+  background: #777;
+  color: white; /* Asegúrate de que el texto sea visible */
+  padding: 8px 16px;
+  border: none; /* Elimina cualquier borde por defecto */
+  font-size: 16px; /* Tamaño de fuente para el texto */
+  cursor: pointer; /* Cambia el cursor a una mano */
+  transition: all 0.3s ease; /* Transición suave para todos los cambios */
+}
+
+button:hover {
+  background: #555; /* Cambia el color de fondo al hacer hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave alrededor del botón */
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+
+button.selected {
+  background-color: #555; /* Un color más oscuro para el botón seleccionado */
+}
+
+h1, h2, h3 {
+  color: white;
+}
+
+.debug {
+  border: 2px red solid;
+}

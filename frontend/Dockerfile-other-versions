@@ -1,0 +1,21 @@
+FROM node:latest 
+WORKDIR /app
+COPY package.json .
+RUN yarn 
+COPY . . 
+RUN yarn build 
+CMD [ "yarn", "start" ]
+
+# docker build -t image-name .
+# docker run -p 3000:3000 image-name
+
+FROM node:latest
+WORKDIR /app
+COPY package*.json ./
+RUN npm install 
+COPY . .
+ENV PORT=8080
+EXPOSE 8080
+CMD [ "npm", "start" ]
+# local:container (3000:8080)
+
