@@ -11,13 +11,18 @@ CORS(app)
 load_dotenv()
 SERP_API_URL = "https://serpapi.com/search.json"
 SERP_API_KEY = os.getenv("SPORTS_API_KEY")
-print("API Key:", SERP_API_KEY)  # Verifica que no esté en None o vacío
+if not SERP_API_KEY:
+    raise ValueError("Error: SPORTS_API_KEY no está definida en el entorno.")
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy"}), 200
 
 @app.route('/sports', methods=['GET'])
 def get_sports_schedule():
     print("API Key:", SERP_API_KEY)  # Verifica que no esté en None o vacío
     # Obtain the param q to the url
-    query = request.args.get('q', '')
+    query = request.args.get('q', 'nfl schedule')
     if not query:
         return jsonify({"message": "Query parameter 'q' is required."}), 400
     try:

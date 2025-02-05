@@ -132,7 +132,8 @@ import styles from "./page.module.css";
 import { useState } from "react";
 import axios from "axios";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+// const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = 'https://87evphhx3h.execute-api.us-east-1.amazonaws.com/dev';
 
 export default function Home() {
   const [scheduleData, setScheduleData] = useState({
@@ -201,7 +202,7 @@ export default function Home() {
         </>
       )}
 
-      <div className={`${styles.dataContainer} debug`}>
+      <div className={`${styles.dataContainer}`}>
         {scheduleData.games.length > 0 ? (
           <>
             {scheduleData.games.map((game, index) => (
