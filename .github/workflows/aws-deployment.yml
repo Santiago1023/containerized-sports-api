@@ -1,0 +1,59 @@
+name: Deploy to AWS ECS
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to main branch
+
+jobs:
+  deploy:
+    name: Deploy to AWS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        run: |
+          aws ecr get-login-password --region $${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com
+          # aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 861276097755.dkr.ecr.us-east-1.amazonaws.com
+          # aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_FRONTEND }}
+          # aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_BACKEND }}
+
+      - name: Build and Push Frontend Image
+        run: |
+          docker build --platform linux/amd64 -t sports-api-frontend ./frontend
+          docker tag sports-api-frontend:latest $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
+          # docker tag sports-api-frontend:latest 861276097755.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
+          docker push $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
+          #docker push 861276097755.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
+
+          # docker build -t frontend-app ./frontend
+          # docker tag frontend-app:latest ${{ secrets.ECR_REPOSITORY_FRONTEND }}:latest
+          # docker push ${{ secrets.ECR_REPOSITORY_FRONTEND }}:latest
+
+      - name: Build and Push Backend Image
+        run: |
+          docker build --platform linux/amd64 -t sports-api-backend ./backend
+          docker tag sports-api-backend:latest $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
+          # docker tag sports-api-backend:latest 861276097755.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
+          docker push $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
+          # docker push 861276097755.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
+          
+          # docker build -t backend-app ./backend
+          # docker tag backend-app:latest ${{ secrets.ECR_REPOSITORY_BACKEND }}:latest
+          # docker push ${{ secrets.ECR_REPOSITORY_BACKEND }}:latest
+
+      - name: Deploy New Task Definitions
+        run: |
+          aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE_FRONTEND }} --force-new-deployment
+          aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE_BACKEND }} --force-new-deployment
