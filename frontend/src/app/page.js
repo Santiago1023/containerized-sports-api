@@ -133,7 +133,8 @@ import { useState } from "react";
 import axios from "axios";
 
 // const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-const BACKEND_URL = 'https://87evphhx3h.execute-api.us-east-1.amazonaws.com/dev';
+// const BACKEND_URL = 'https://87evphhx3h.execute-api.us-east-1.amazonaws.com/dev';
+const BACKEND_URL = 'https://ujz6ozv82d.execute-api.us-east-1.amazonaws.com/dev';
 
 export default function Home() {
   const [scheduleData, setScheduleData] = useState({
