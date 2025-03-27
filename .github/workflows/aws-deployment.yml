@@ -24,7 +24,7 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         run: |
-          aws ecr get-login-password --region $${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $${{ secrets.AWS_ID }}.dkr.ecr.$${{ secrets.AWS_REGION }}.amazonaws.com
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ID }}.dkr.ecr.$${{ secrets.AWS_REGION }}.amazonaws.com
           # aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 861276097755.dkr.ecr.us-east-1.amazonaws.com
           # aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_FRONTEND }}
           # aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_BACKEND }}
@@ -32,9 +32,9 @@ jobs:
       - name: Build and Push Frontend Image
         run: |
           docker build --platform linux/amd64 -t sports-api-frontend ./frontend
-          docker tag sports-api-frontend:latest $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
+          docker tag sports-api-frontend:latest ${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
           # docker tag sports-api-frontend:latest 861276097755.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
-          docker push $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
+          docker push ${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
           #docker push 861276097755.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-frontend-latest
 
           # docker build -t frontend-app ./frontend
@@ -44,9 +44,9 @@ jobs:
       - name: Build and Push Backend Image
         run: |
           docker build --platform linux/amd64 -t sports-api-backend ./backend
-          docker tag sports-api-backend:latest $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
+          docker tag sports-api-backend:latest ${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
           # docker tag sports-api-backend:latest 861276097755.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
-          docker push $${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
+          docker push ${{ secrets.AWS_ID }}.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
           # docker push 861276097755.dkr.ecr.us-east-1.amazonaws.com/sports-api-santi:sports-api-backend-latest
           
           # docker build -t backend-app ./backend
