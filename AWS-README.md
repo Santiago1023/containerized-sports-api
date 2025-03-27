@@ -56,7 +56,7 @@
 ![ecs9.png](/images/ecs9.png)
 ![ecs10.png](/images/ecs10.png)
 We can check the dns name of the ALB created:
-![https-dns-back.png](/images/https-dns-back.png)
+![https-dns-back.png](/images/http-dns-back.png)
 6) we need to create an api gateway:
 	create an api
 	in rest api -> build
