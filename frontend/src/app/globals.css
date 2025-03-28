@@ -8,22 +8,22 @@ button {
   display: flex;
   border-radius: 16px;
   background: #777;
-  color: white; /* Asegúrate de que el texto sea visible */
+  color: white; 
   padding: 8px 16px;
-  border: none; /* Elimina cualquier borde por defecto */
-  font-size: 16px; /* Tamaño de fuente para el texto */
-  cursor: pointer; /* Cambia el cursor a una mano */
-  transition: all 0.3s ease; /* Transición suave para todos los cambios */
+  border: none; 
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
 }
 
 button:hover {
-  background: #555; /* Cambia el color de fondo al hacer hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave alrededor del botón */
-  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+  background: #555; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+  transform: scale(1.05); 
 }
 
 button.selected {
-  background-color: #555; /* Un color más oscuro para el botón seleccionado */
+  background-color: #555; 
 }
 
 h1, h2, h3 {

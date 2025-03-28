@@ -3,6 +3,11 @@
 ### Project Overview
 This is a project based on a serie of devops challenges, the teacher explained how to run a containerized backend in Flask with python in ECS with fargate, create and use AWS ALB(Application Load Balancer) and AWS API Gateway. I complemented the solution with the creation and deploy of a containerized frontend in Nextjs, in order to have a Web Interface to view the games schedule of NBA, NFL and MLB, and I improved the version of the project with the addition of a workflow to upload the images to ECR, and update the services in ECS.
 
+[My Medium BLOG.](https://medium.com/@santiago.bedoyad/sports-schedule-application-with-ecs-e922c51689b9 "My Medium BLOG.")
+
+
+[You can enter to the deployed application, it is available only some days.](http://sports-api-alb-frontend-243041282.us-east-1.elb.amazonaws.com/ "It is available only some days")
+
 **Tools:**
 - External API (Serapi)
 - Docker
