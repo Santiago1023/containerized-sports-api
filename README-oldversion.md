@@ -1,32 +1,26 @@
 ## DevOps Challenge: Day 4 (Sports API Management System)
 
 ### Project Overview
-This is a project based on a serie of devops challenges, the teacher explained how to run a containerized backend in Flask with python in ECS with fargate, create and use AWS ALB(Application Load Balancer) and AWS API Gateway. I complemented the solution with the creation and deploy of a containerized frontend in Nextjs, in order to have a Web Interface to view the games schedule of NBA, NFL and MLB, and I improved the version of the project with the addition of a workflow to upload the images to ECR, and update the services in ECS.
+This is a project based on a serie of devops challenges, the teacher explained how to run a containerized backend in Flask with python in ECS with fargate, create and use AWS ALB(Application Load Balancer) and AWS API Gateway. I complement the solution with the creation and deploy of a containerized frontend in Nextjs, in order to have a Web Interface to view the games schedule of NBA, NFL and MLB.
 
 **Tools:**
 - External API (Serapi)
-- Docker
 - Cloud service (AWS Fargate, ECR, ECS, API Gateway, ALB)
 - Flask (Python)
 - NextJS
-- GitHub Actions
 
 ### Architecture
 The architecture of the application is described below:
-- The users can type on browser http://your-dns-alb  and can view the application. (Note: the application is not running for costs).
+- The users can type on browser http://dns-alb  and can view the application. (Note: the application is not running for costs).
 - Underneath the application has a load balancer that can balance the load in 2 containers where the frontend application was deployed.
-- The frontend has internally an environment variable that it is the URL of the API Gateway, the API Gateway has endpoints that enroute the request to other Application Load Balancer that balance the load between 2 containers where the backend application was deployed.
+- The frontend has internally an environment variable that it is the URL of the Api Gateway, the Api Gateway has endpoints that enroute the request to other Application Load Balancer that balance the load between 2 containers where the backend application was deployed.
 - The backend has internally an environment variable to fetch the data of a SERPAPI.
-- There is a worflow that automate the deployment the iamges and services in ECR and ECS when I make a push in the main branch.
 
-![new-architecture.png](/images/new-architecture.png)
+![architecture.png](/images/architecture.png)
 
 ### Project Structure
 ```
 containerized-sports-api/ # Main directory
-├── .github/workflows # the workflows of the application
-│ ├── aws.yaml # it is a base workflow that I found in github marketplace
-│ ├── aws-deployment.yaml # it is the workflow that I build with documentation
 ├── backend/ # Flask app
 │ ├── .dockerignore # Not necessary files when containers are created
 │ ├── app.py # Contains route and app creation
@@ -50,12 +44,11 @@ containerized-sports-api/ # Main directory
 - Create an ECR, and upload images to the aws cloud.
 - Create clusters, task definitions and services using Fargate and ELB.
 - Create an API Gateway and interact with it.
-- Create a GitHub Actions workflow and automate the deployment.
 - Troubleshooting with two specific errors:
 1) I was not able to create cluster because I do not have permissions, and I do not know how to fix it, so I search this solution, and create the role:
-[first link](https://repost.aws/questions/QUBrlvoHEbQ1qj9V403xinWw/unable-to-create-ecs-cluster-in-fargate-getting-service-unavailable "first link"),
-[second link](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateServiceLinkedRole.html "second link"),
-[third link](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using-service-linked-roles.html#create-slr "third link").
+[first link](https://repost.aws/questions/QUBrlvoHEbQ1qj9V403xinWw/unable-to-create-ecs-cluster-in-fargate-getting-service-unavailable "first link")
+[second link](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateServiceLinkedRole.html "second link")
+[third link](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using-service-linked-roles.html#create-slr "third link")
 2) I am also had this problem: Resource handler returned message: "Error occurred during operation ECS Deployment Circuit Breaker was triggered."
 Basically I had to debug the image, the container, and I noticed that I had errors with the environment variable of the image and container, so I fixed it.
 [first link](https://stackoverflow.com/questions/76952325/resource-handler-returned-message-error-occurred-during-operation-ecs-deploym "first link")

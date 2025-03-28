@@ -49,7 +49,7 @@
 ![ecs3.png](/images/ecs3.png)
 ![ecs4.png](/images/ecs4.png)
 ![ecs5.png](/images/ecs5.png)
-5) We need to create a service to the backend
+5) We need to create a service to the frontend
 ![ecs6.png](/images/ecs6.png)
 ![ecs7.png](/images/ecs7.png)
 ![ecs8.png](/images/ecs8.png)
